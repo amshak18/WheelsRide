@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const {Schema, model} = mongoose;
 
 const StateSchema = new Schema({
-    stateName: String
+    name: String,
+    country: String
 })
 
 const State = model('State', StateSchema);

@@ -1,13 +1,9 @@
 {
   "server": {
     "host": "localhost",
-    "post": 3000
+    "port": 3000
   },
-  "database": {
-    "host": "localhost",
-    "port": 3306,
-    "schema": "wheelsride",
-    "user": "wheelsride",
-    "password": "wheel$rid3"
+  "auth": {
+    "secret": "Wheel$rid3"
   }
 }
