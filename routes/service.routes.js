@@ -106,6 +106,9 @@ router.get('/request', passport.authenticate('jwt', {session: false}), (req, res
         if (req.query.provider) {
             _.extend(filter, {provider: req.query.provider});
         }
+        if(req.query.requestedBy) {
+            _.extend(filter, {requestedBy: req.query.requestedBy});
+        }
         serviceController.getServiceRequests(filter).then((serviceRequests) => {
             res.status(200).json(serviceRequests);
         }, (error) => {
