@@ -5,7 +5,9 @@ const router = express.Router();
 const {userController} = require('../controller/user.controller');
 const config = require('config');
 
-
+/**
+ * router method to handle HTTP POST to the /login endpoint.
+ */
 router.post('/login', (req, res, next) => {
     let body = req.body;
     if (!body.username || !body.password) {
@@ -30,7 +32,7 @@ router.post('/login', (req, res, next) => {
                             user
                         })
                     } else {
-                        if(err) {
+                        if (err) {
                             console.log(err);
                         }
                         res.status(401).json({
@@ -43,6 +45,9 @@ router.post('/login', (req, res, next) => {
         })
     }
 });
+/**
+ * router method to handle HTTP POST to the /signup endpoint.
+ */
 router.post('/signup', (req, res, next) => {
     const user = req.body;
     if (!user.username || !user.password) {

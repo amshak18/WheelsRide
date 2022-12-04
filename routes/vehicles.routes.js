@@ -4,7 +4,9 @@ const passport = require("passport");
 const router = express.Router();
 const {getToken} = require('../util/httpRequest.util');
 
-/* GET users listing. */
+/**
+ * router method to handle HTTP POST to /vehicle/register endpoint
+ */
 router.post('/register', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     const body = req.body
@@ -27,6 +29,9 @@ router.post('/register', passport.authenticate('jwt', {session: false}), (req, r
 
 });
 
+/**
+ * router method to handle HTTP GET to /vehicle/user/<id> endpoint
+ */
 router.get('/user/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {
@@ -49,6 +54,9 @@ router.get('/user/:id', passport.authenticate('jwt', {session: false}), (req, re
 
 });
 
+/**
+ * router method to handle HTTP DELETE to /vehicle/<id> endpoint
+ */
 router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     const token = getToken(req.headers);
     if (token) {
@@ -68,6 +76,9 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res,
     }
 })
 
+/**
+ * router method to handle HTTP PUT to /vehicle/<id> endpoint
+ */
 router.put('/:id', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     const token = getToken(req.headers);
     if (token) {

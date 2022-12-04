@@ -1,40 +1,22 @@
 const {connect, disconnect} = require("../util/db.config");
 const {Vehicle} = require("../model/vehicle.model");
 
+/**
+ * this is the data access class for the Vehicle class.
+ */
 class VehicleRepository {
+    /**
+     * Construct the repository by connecting to the database.
+     */
     constructor() {
         connect();
     }
 
-    async getAllVehicles() {
-        return Vehicle.find()
-            .populate([
-                {
-                    path: 'vehicleLocation',
-                    model: 'Address',
-                    populate: {
-                        path: 'state',
-                        model: 'State'
-                    }
-                },
-                {
-                    path: 'vehicleCurrentPosition',
-                    model: 'LatLng'
-                },
-                {
-                    path: 'vehicleOwner',
-                    model: 'User',
-                    populate: {
-                        path: 'address',
-                        model: 'Address',
-                        populate: {
-                            path: 'state',
-                            model: 'State'
-                        }
-                    }
-                }]);
-    }
-
+    /**
+     * this method us used to get all the vehicle documents for the user.
+     * @param userId the userid of the owner
+     * @returns {Promise<*>} the promise containing the list of vehicles owned by the user.
+     */
     async getVehiclesForUser(userId) {
         return Vehicle.find({vehicleOwner: userId})
             .populate([
@@ -64,6 +46,11 @@ class VehicleRepository {
                 }]);
     }
 
+    /**
+     * This method is used to create a vehicle
+     * @param vehicle the vehicle document that needs to be added to the collection.
+     * @returns {Promise<*>} the promise containing the created vehicle document
+     */
     async createVehicle(vehicle) {
         let createdVehicle = {};
         try {
@@ -97,6 +84,11 @@ class VehicleRepository {
                 }]);
     }
 
+    /**
+     * this method is used to delete the vehicle document from the collection.
+     * @param id the id of the vehicle to be deleted.
+     * @returns {Promise<{id, deletedStatus: string}>} the promise containing the deletion status.
+     */
     async deleteById(id) {
         let deletedVehicle = {};
         try {
@@ -111,6 +103,11 @@ class VehicleRepository {
         }
     }
 
+    /**
+     * this method is used to find a vehicle document with the given id
+     * @param id the id of the vehicle to be found
+     * @returns {Promise<*>} the promise containing the vehicle document.
+     */
     async findbyId(id) {
         let foundVehicle = {};
         try {
@@ -147,6 +144,11 @@ class VehicleRepository {
         return foundVehicle;
     }
 
+    /**
+     * this method is used to update a vehicle document
+     * @param vehicle the vehicle document containing the updates
+     * @returns {Promise<*>} the promise containing the updated vehicle document
+     */
     async updateOne(vehicle) {
         let updatedVehicle = {};
         try {
@@ -184,6 +186,10 @@ class VehicleRepository {
     }
 }
 
+/**
+ * create a new VehicleRepository to be exported.
+ * @type {VehicleRepository}
+ */
 const vehicleRepository = new VehicleRepository();
 
 module.exports = {

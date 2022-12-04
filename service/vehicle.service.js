@@ -6,10 +6,18 @@ const {stateRepository} = require("../repository/state.repository");
 const {latLngRepository} = require("../repository/latLng.repository");
 const {Vehicle} = require("../model/vehicle.model");
 
+/**
+ * This is a service used to serve /vehicle endpoints
+ */
 class VehicleService {
     constructor() {
     }
 
+    /**
+     * this method is used to create a new vehicle
+     * @param body the body containing the userid and the vehicle document.
+     * @returns {Promise<*>} the promise containing the created vehicle document.
+     */
     async createVehicle(body) {
         let vehicle = _.get(body, 'vehicle', {});
         let userId = _.get(body, 'userId', '');
@@ -29,8 +37,7 @@ class VehicleService {
                 if (!_.isEmpty(currentLocation)) {
                     currentLocation = await latLngRepository.createLatLng(currentLocation);
                     vehicle.vehicleCurrentPosition = _.get(currentLocation, "_id");
-                }
-                else {
+                } else {
                     delete vehicle.vehicleCurrentPosition;
                 }
                 vehicleAddress = await addressRepository.createAddress(vehicleAddress);
@@ -42,10 +49,20 @@ class VehicleService {
         throw new Error("Vehicle or User Information is incorrect!");
     }
 
+    /**
+     * this method is used to get all the vehicles of a user
+     * @param userId the usedId of the owner
+     * @returns {Promise<*>} the promise containing the list of vehicles owned by the user.
+     */
     async getVehiclesForUser(userId) {
         return await vehicleRepository.getVehiclesForUser(userId);
     }
 
+    /**
+     * this method is used to delete the vehicle by a given id
+     * @param id the id of the vehicle to be deleted
+     * @returns {Promise<{id, deletedStatus: string}>} the promise containing the deleted status.
+     */
     async deleteById(id) {
         const vehicle = await vehicleRepository.findbyId(id);
         await latLngRepository.deleteOne(vehicle.vehicleCurrentPosition._id);
@@ -53,12 +70,21 @@ class VehicleService {
         return await vehicleRepository.deleteById(vehicle._id);
     }
 
+    /**
+     * this method is used to update a given vehicle.
+     * @param vehicle the vehicle document containing the updates
+     * @returns {Promise<*>} the promise containing the updated vehicle document.
+     */
     async updateVehicle(vehicle) {
         return await vehicleRepository.updateOne(vehicle);
     }
 
 }
 
+/**
+ * create a new VehicleService to be exported.
+ * @type {VehicleService}
+ */
 const vehicleService = new VehicleService();
 
 module.exports = {

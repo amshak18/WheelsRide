@@ -5,7 +5,9 @@ const router = express.Router();
 const {getToken} = require('../util/httpRequest.util');
 const _ = require("lodash");
 
-/* GET users listing. */
+/**
+ * router method to handle HTTP POST to the /service/request endpoint
+ */
 router.post('/request', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     const body = req.body
@@ -28,6 +30,9 @@ router.post('/request', passport.authenticate('jwt', {session: false}), (req, re
 
 });
 
+/**
+ * router method to handle HTTP GET to the /service/request/<id> endpoint
+ */
 router.get('/request/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {
@@ -51,6 +56,9 @@ router.get('/request/:id', passport.authenticate('jwt', {session: false}), (req,
 
 });
 
+/**
+ * router method to handle HTTP PATCH to the /service/request/<id> endpoint.
+ */
 router.patch('/request/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {
@@ -73,6 +81,9 @@ router.patch('/request/:id', passport.authenticate('jwt', {session: false}), (re
 
 });
 
+/**
+ * router method to handle HTTP DELETE to the /service/request/<id> endpoint
+ */
 router.delete('/request/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {
@@ -95,6 +106,9 @@ router.delete('/request/:id', passport.authenticate('jwt', {session: false}), (r
 
 });
 
+/**
+ * router method to handle HTTP GET to the /service/request endpoint.
+ */
 router.get('/request', passport.authenticate('jwt', {session: false}), (req, res, next) => {
     const token = getToken(req.headers)
     if (token) {
@@ -106,7 +120,7 @@ router.get('/request', passport.authenticate('jwt', {session: false}), (req, res
         if (req.query.provider) {
             _.extend(filter, {provider: req.query.provider});
         }
-        if(req.query.requestedBy) {
+        if (req.query.requestedBy) {
             _.extend(filter, {requestedBy: req.query.requestedBy});
         }
         serviceController.getServiceRequests(filter).then((serviceRequests) => {

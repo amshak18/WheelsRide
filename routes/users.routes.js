@@ -7,7 +7,9 @@ const {getToken} = require('../util/httpRequest.util');
 
 authConfig(passport);
 
-/* GET users listing. */
+/**
+ * router method to handle HTTP GET to /users/ endpoint
+ */
 router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {
@@ -20,6 +22,9 @@ router.get('/', passport.authenticate('jwt', {session: false}), (req, res) => {
 
 });
 
+/**
+ * router method to handle HTTP GET to /users/<id> endpoint
+ */
 router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {
@@ -36,6 +41,9 @@ router.get('/:id', passport.authenticate('jwt', {session: false}), (req, res) =>
 
 });
 
+/**
+ * router method to handle HTTP PATCH to /users/<id> endpoint
+ */
 router.patch('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {
@@ -51,6 +59,9 @@ router.patch('/:id', passport.authenticate('jwt', {session: false}), (req, res) 
     }
 });
 
+/**
+ * router method to handle HTTP PUT to /users/<id> endpoint.
+ */
 router.put('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {
@@ -66,6 +77,9 @@ router.put('/:id', passport.authenticate('jwt', {session: false}), (req, res) =>
     }
 });
 
+/**
+ * router method to handle HTTP DELETE to /users/<id> endpoint.
+ */
 router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
     const token = getToken(req.headers)
     if (token) {

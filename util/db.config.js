@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const promise = require('bluebird');
 
+/**
+ * this method is used to connect to the mongodb
+ */
 const connect = () => {
     const url = "mongodb+srv://wheelsride:Wheel$rid3@cs602.ordsl2a.mongodb.net/wheelsride?retryWrites=true&w=majority";
     mongoose.promise = promise;
@@ -21,6 +24,9 @@ const connect = () => {
 
 }
 
+/**
+ * this method is used to disconnect from the mongodb.
+ */
 const disconnect = () => {
     if (!mongoose.connection) {
         return;

@@ -3,6 +3,10 @@ const {Strategy: JwtStrategy, ExtractJwt} = require('passport-jwt');
 const {User} = require('../model/user.model');
 const secret = 'Wheel$rid3';
 
+/**
+ * this is the passport configuration method used to setup authentication library.
+ * @param passport
+ */
 const authConfig = (passport) => {
     let opts = {};
     opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
