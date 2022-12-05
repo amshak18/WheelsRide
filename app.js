@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const passport = require('passport');
@@ -11,6 +12,8 @@ const vehicleRouter = require('./routes/vehicles.routes');
 const serviceRouter = require('./routes/service.routes');
 
 const app = express();
+
+app.use(cors());
 
 app.use(logger('common'));
 app.use(express.json());
